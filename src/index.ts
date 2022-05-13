@@ -1,7 +1,9 @@
-import * as THREE from 'three';
-import { GLTF, GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
+import { AmbientLight, DirectionalLight, Euler, OrthographicCamera, Scene, Vector3, WebGLRenderer } from 'three';
+// @ts-ignore
+import { GLTF, GLTFLoader } from '@three/loaders/GLTFLoader';
+import { VERSION } from './version';
 
-const logo3DTag = document.createElement('logo-3d')
+document.createElement('logo-3d')
 window.addEventListener('DOMContentLoaded', (event) => {
 
     var tagInstances = document.getElementsByTagName('logo-3d');
@@ -18,8 +20,8 @@ window.addEventListener('DOMContentLoaded', (event) => {
             glbUrl: customElement.getAttribute('glb-url'),
             rotationSpeed: +customElement.getAttribute('rotation-speed') || 0.01,
             frustum: +customElement.getAttribute('camera-frustum') || 3.614,
-            cameraPosition: new THREE.Vector3(+cameraPositionInput[0], +cameraPositionInput[1], +cameraPositionInput[2]),
-            cameraRotation: new THREE.Euler(+cameraRotationInput[0], +cameraRotationInput[1], +cameraRotationInput[2]),
+            cameraPosition: new Vector3(+cameraPositionInput[0], +cameraPositionInput[1], +cameraPositionInput[2]),
+            cameraRotation: new Euler(+cameraRotationInput[0], +cameraRotationInput[1], +cameraRotationInput[2]),
             ambientLightColor: customElement.getAttribute('ambient-light-color') || '#eeeeee',
             ambientLightIntensity: +customElement.getAttribute('ambient-light-intensity') || 1,
             directionalLightColor: customElement.getAttribute('directional-light-color') || '#eeeeee',
@@ -51,10 +53,10 @@ function createLogo(
     let aspect = width / height;
 
     /** SCENE */
-    let scene = new THREE.Scene();
+    let scene = new Scene();
 
     /** RENDERER */
-    var renderer = new THREE.WebGLRenderer({
+    var renderer = new WebGLRenderer({
         antialias: true,
         alpha: true,
     });
@@ -62,7 +64,7 @@ function createLogo(
     htmlElement.appendChild(renderer.domElement);
 
     /** CAMERA */
-    var camera = new THREE.OrthographicCamera((params.frustum * aspect) / -2, (params.frustum * aspect) / 2, params.frustum / 2, params.frustum / -2, 1, 100);
+    var camera = new OrthographicCamera((params.frustum * aspect) / -2, (params.frustum * aspect) / 2, params.frustum / 2, params.frustum / -2, 1, 100);
     camera.position.x = params.cameraPosition.x;
     camera.position.y = params.cameraPosition.y;
     camera.position.z = params.cameraPosition.z;
@@ -72,10 +74,10 @@ function createLogo(
     camera.rotation.z = params.cameraRotation.z;
 
     /** LIGHTS */
-    var light = new THREE.AmbientLight(params.ambientLightColor, params.ambientLightIntensity);
+    var light = new AmbientLight(params.ambientLightColor, params.ambientLightIntensity);
     scene.add(light);
 
-    var directionalLight = new THREE.DirectionalLight(params.directionalLightColor, params.directionalLightIntensity);
+    var directionalLight = new DirectionalLight(params.directionalLightColor, params.directionalLightIntensity);
     scene.add(directionalLight);
     directionalLight.position.copy(camera.position);
 
@@ -89,7 +91,7 @@ function createLogo(
         htmlElement.appendChild(renderer.domElement);
 
         customElement.dispatchEvent(new Event('ready'));
-        console.info('💻 Logo develop by https://smth.it ');
+        console.info(`smth-v${VERSION}`);
     });
 
     window.addEventListener('resize', () => {

@@ -1,0 +1,47 @@
+name: logo-3d
+
+on:
+  workflow_dispatch:
+    inputs:
+      tags:
+        required: false
+        description: "Test scenario tags"
+  push:
+    tags:
+      - "v*"
+
+jobs:
+  build-component:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Get the tag name
+        run: echo "TAG=${GITHUB_REF/refs\/tags\//}" >> $GITHUB_ENV
+
+      - name: Use Node 12.x
+        uses: actions/setup-node@v1
+        with:
+          node-version: "12.x"
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Create artifacts folder
+        run: mkdir ./artifacts
+
+      # Build
+      - name: Build Vesta
+        run: npm run build
+
+      - name: Move artifact to folder
+        run: mv ./dist/bundle.js  ./artifacts/logo-3d-${{ env.TAG }}.js
+
+      # Create release
+      - uses: ncipollo/release-action@v1
+        with:
+          artifacts: "./artifacts/logo-3d--${{ env.TAG }}.js"
+          token: ${{ secrets.GITHUB_TOKEN }}
+          allowUpdates: true
+          name: vesta ${{ env.TAG }}
