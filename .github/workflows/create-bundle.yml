@@ -11,7 +11,7 @@ on:
       - "v*"
 
 jobs:
-  build-component:
+  create-bundle:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -32,7 +32,7 @@ jobs:
         run: mkdir ./artifacts
 
       # Build
-      - name: Build Vesta
+      - name: Build Bundle
         run: npm run build
 
       - name: Move artifact to folder
@@ -41,7 +41,7 @@ jobs:
       # Create release
       - uses: ncipollo/release-action@v1
         with:
-          artifacts: "./artifacts/logo-3d--${{ env.TAG }}.js"
+          artifacts: "./artifacts/logo-3d-${{ env.TAG }}.js"
           token: ${{ secrets.GITHUB_TOKEN }}
           allowUpdates: true
           name: vesta ${{ env.TAG }}
