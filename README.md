@@ -1,4 +1,4 @@
-<!-- [![Banner](static/moongooseCursor.jpg)](https://smth.it) -->
+[![Banner](static/logo3D.png)](https://smth.it)
 
 # Logo 3d
 
@@ -9,6 +9,7 @@ The component auto-creates a div tag and injects a canvas in a WebGL context wit
 
 The 3d rendered scene serve by an Orthographic Camera, Alpha background WebGLRenderer and a 3D Model loaded by GLTF Loader.
 
+[![Banner](static/logo3D.gif)](https://smth.it)
 # Usage
 
 For use a Lib inject in a header the bundle script

@@ -1,6 +1,6 @@
 {
   "name": "logo-3d",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "3D Logo Animation",
   "main": "index.js",
   "scripts": {
@@ -14,7 +14,7 @@
     "3d"
   ],
   "author": "Michael Musso <mmusso@smth.it>",
-  "license": "LICENCE",
+  "license": "MIT",
   "devDependencies": {
     "@types/three": "^0.140.0",
     "@vxna/optimize-three-webpack-plugin": "^5.1.3",
